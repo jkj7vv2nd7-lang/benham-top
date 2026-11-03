@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ベンハムのコマ工作キット ― 白黒の円盤から色が見える</title>
+<meta name="description" content="白黒の円盤を回すと淡い色が見える「ベンハムのコマ」の工作キット。オリジナル絵柄6種、CD貼り付け用と心棒用の実寸型紙つき。">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon.png">
+<style>
+  :root{
+    --ink:#2b2620; --mut:#7a7264; --bg:#f5efe3; --card:#fffdf7; --line:#ddd2ba;
+    --accent:#2f5da3; --accent2:#b3541e; --soft:#f1e8d2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0; padding:0;}
+  body{font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic UI","Yu Gothic",sans-serif; background:var(--bg); color:var(--ink); line-height:1.75; font-size:15.5px;}
+  header.top{background:linear-gradient(180deg,#3a3b40,#26262a); color:#f3ead6; padding:20px 16px 16px;}
+  header.top .wrap{max-width:860px; margin:0 auto;}
+  header.top h1{font-size:23px; margin:0 0 2px; letter-spacing:.04em;}
+  header.top .sub{font-size:13.5px; opacity:.85; margin:0;}
+  header.top .ver{font-size:11px; opacity:.6; margin:4px 0 0;}
+  main{max-width:860px; margin:0 auto; padding:14px 14px 60px;}
+  section.card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin:0 0 16px;}
+  section.card h2{font-size:18px; margin:0 0 8px; border-left:5px solid var(--accent); padding-left:9px;}
+  section.card h3{font-size:15.5px; margin:14px 0 4px; color:var(--accent);}
+  p{margin:6px 0;}
+  ul,ol{margin:6px 0 6px 1.2em; padding:0;}
+  li{margin:3px 0;}
+  .small{font-size:13px; color:var(--mut);}
+  .note{background:#fdf3e0; border:1px solid #ecd9ac; border-radius:10px; padding:9px 12px; font-size:14px;}
+  .warn{background:#fdecec; border:1px solid #e5b4b4; border-radius:10px; padding:9px 12px; font-size:14px;}
+  .patgrid{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0;}
+  .patbtn{display:flex; flex-direction:column; align-items:center; gap:4px; border:2px solid var(--line); background:#fff; border-radius:12px; padding:8px 10px; cursor:pointer; font-family:inherit; font-size:13.5px; font-weight:700; color:var(--ink); width:104px;}
+  .patbtn svg{width:56px; height:56px;}
+  .patbtn[aria-pressed="true"]{border-color:var(--accent); background:#eef3fb;}
+  .previewbox{background:#e9e2cf; border:1px solid var(--line); border-radius:10px; padding:10px; overflow-x:auto;}
+  .previewbox svg{display:block; margin:0 auto; max-width:100%; height:auto; background:#fff; box-shadow:0 1px 5px rgba(0,0,0,.18);}
+  .pagetabs{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;}
+  .pagetabs button{border:1.5px solid var(--line); background:#fff; border-radius:8px; padding:5px 11px; font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer; color:var(--ink);}
+  .pagetabs button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .row{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+  button.act, a.act{flex:1 1 200px; display:block; text-align:center; font-family:inherit; font-size:15px; font-weight:700; border-radius:10px; border:2px solid var(--accent); background:var(--accent); color:#fff; padding:11px 8px; cursor:pointer; text-decoration:none;}
+  button.act.sub, a.act.sub{background:#fff; color:var(--accent);}
+  .printimg{margin-top:10px; display:none;}
+  .printimg img{max-width:100%; border:1px solid var(--line);}
+  .spinwrap{width:min(300px, 82vw); margin:8px auto; }
+  .spinwrap svg{width:100%; height:100%; display:block; animation-name:rot; animation-timing-function:linear; animation-iteration-count:infinite; animation-play-state:paused;}
+  @keyframes rot{from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
+  .spincontrols{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center; margin-top:8px;}
+  .spincontrols button{border:1.5px solid var(--accent); background:#fff; color:var(--accent); border-radius:8px; padding:6px 14px; font-family:inherit; font-size:14px; font-weight:700; cursor:pointer;}
+  .spincontrols button.main{background:var(--accent); color:#fff;}
+  .spincontrols input[type="range"]{width:170px;}
+  .stepnum{display:inline-block; background:var(--accent); color:#fff; border-radius:50%; width:1.55em; height:1.55em; text-align:center; line-height:1.55em; font-weight:700; margin-right:.35em; font-size:.92em;}
+  #boot-error{display:none; background:#fdecec; border:1px solid #d66; border-radius:10px; padding:12px 14px; margin:14px;}
+  footer{max-width:860px; margin:0 auto; padding:0 14px 40px; color:var(--mut); font-size:12.5px;}
+  @media print{
+    body{background:#fff;}
+    header.top, .noprint{display:none !important;}
+    section.card{border:none; border-radius:0; padding:6px 0;}
+  }
+</style>
+<noscript><style>main{display:none}</style></noscript>
+</head>
+<body>
+<noscript><div style="padding:20px; font-family:sans-serif;"><h1>ベンハムのコマ工作キット</h1><p>このアプリはJavaScriptが必要です。SafariやChromeなどのブラウザで開いてください。</p></div></noscript>
+<header class="top">
+  <div class="wrap">
+    <h1>ベンハムのコマ工作キット</h1>
+    <p class="sub">白黒だけの円盤を回すと、淡い色が見える不思議なコマ</p>
+    <p class="ver">バージョン：2026-11-03.1</p>
+  </div>
+</header>
+<div id="boot-error"><strong>読み込みに失敗しました。</strong>お手数ですが、ページを再読み込みしてください。それでも直らない場合は、ブラウザを変えてお試しください。</div>
+<main>
+  <section class="card" id="intro">
+    <h2>はじめに</h2>
+    <p>白と黒だけで描かれた円盤を、コマのように回してみてください。しばらくすると、円盤の上に<strong>淡い色の輪</strong>が浮かんで見えてきます。色のついたインクはどこにも使っていないのに、です。この不思議なコマは、19世紀に広まった科学玩具「ベンハムのコマ（ベンハムの円盤）」として知られています。</p>
+    <p>このキットでは、古典的な絵柄をそのまま写すのではなく、<strong>新しくデザインした6種類の絵柄</strong>を用意しました。扇形と円弧の配置・長さ・組数を変えた、ここでしか見られない組み合わせです。絵柄によって見えやすい色の傾向が違うので、回して見比べるのも楽しみのひとつです。</p>
+    <ul>
+      <li>型紙は2形式。<strong>CD／DVDに貼る用（直径120mm・中心穴15mm）</strong>と、<strong>厚紙＋心棒用（直径100mm）</strong>を、同じページに収めました。</li>
+      <li>印刷はA4・実寸。赤い5cmの線で実寸を確認できます。</li>
+      <li>見える色や強さは<strong>人によって違います</strong>。「傾向」はあくまで目安としてお読みください。</li>
+    </ul>
+    <p class="warn">注意：画面やコマの「ちらつき」が苦手な方は、長く見続けないでください。気分が悪くなったら、すぐに見るのをやめましょう。</p>
+  </section>
+
+  <section class="card" id="kit">
+    <h2>絵柄と型紙</h2>
+    <p>絵柄を選ぶと、型紙（CD用＋心棒用）と試し回しの絵柄が切り替わります。型紙ページのボタンから、印刷用の画像（A4・300dpi）が作れます。</p>
+    <div class="patgrid" id="patgrid" role="group" aria-label="絵柄選択"></div>
+    <p id="patinfo" class="note" style="margin:8px 0;"></p>
+    <div class="pagetabs" id="pagetabs" role="group" aria-label="ページ選択"></div>
+    <div class="previewbox" id="preview"></div>
+    <div class="row noprint">
+      <button type="button" class="act" id="btnMakeImg">このページの印刷用画像を作る</button>
+      <a class="act sub" id="lnkDownload" href="#" download="benham-page.png" style="display:none;">画像を保存する</a>
+    </div>
+    <div class="printimg" id="printimg"></div>
+    <p class="small">印刷のしかた：作られた画像を開き、プリンタで<strong>「100%（実際のサイズ）」</strong>を選んでA4に印刷してください。印刷後は、型紙の隅にある<strong>赤い5cmの線</strong>が定規で測って5cmになっているか、必ず確認してください。写真を印刷するのと同じ要領（写真アプリに保存してからの印刷など）でも大丈夫です。</p>
+  </section>
+
+  <section class="card" id="spin">
+    <h2>画面で試し回し</h2>
+    <p>印刷する前に、選んだ絵柄を画面の上で回して試せます。ただし画面の表示には限界があり、本物のコマとは色の出方が違います。あくまで「ためし見」としてどうぞ。</p>
+    <div class="spinwrap" id="spinwrap"></div>
+    <div class="spincontrols noprint">
+      <button type="button" class="main" id="spinToggle">回す</button>
+      <button type="button" id="spinDir">回転方向：時計回り</button>
+      <label>速さ <input type="range" id="spinSpeed" min="1" max="12" step="0.5" value="6"> <span id="spinSpeedVal">毎秒 約6回転</span></label>
+    </div>
+    <p class="small">ちらつきが苦手な方は、無理のない範囲でお試しください。</p>
+  </section>
+
+  <section class="card" id="make">
+    <h2>作り方</h2>
+    <h3>CD／DVD用（直径120mm）</h3>
+    <ol>
+      <li><span class="stepnum">1</span><strong>型紙を印刷する。</strong>100%（実際のサイズ）で印刷し、赤い5cmの線が実寸どおりか確かめます。</li>
+      <li><span class="stepnum">2</span><strong>切り抜く。</strong>外側の円を切り抜き、中心の穴（直径15mm）も切り抜きます。コンパスカッターがあると、中心がずれない綺麗な円になります。中心の位置がずれると回転がぶれるので、ここがいちばん大切です。</li>
+      <li><span class="stepnum">3</span><strong>CDに貼る。</strong>使わないCD／DVDのレーベル面に、中心穴を合わせて貼ります。スティックのりや両面テープで、<strong>中心から外側へ</strong>空気を押し出すように貼ると、気泡が入りにくくなります。しわや気泡は色の見え方を乱すので、ゆっくり丁寧に。</li>
+      <li><span class="stepnum">4</span><strong>よく乾かす。</strong>のりが乾いてから回しましょう。</li>
+    </ol>
+    <h3>心棒用（直径100mm・厚紙）</h3>
+    <ol>
+      <li><span class="stepnum">1</span><strong>厚紙に貼って切り抜く。</strong>型紙を厚紙（0.5〜1mm）に貼り、乾いてから円を切り抜きます。</li>
+      <li><span class="stepnum">2</span><strong>心棒を立てる。</strong>中心のマークに竹串や割り箸を<strong>まっすぐ垂直に</strong>刺し、裏側を接着剤で固めます。小さな紙片を裏に貼って補強すると、ぐらつきにくくなります。</li>
+      <li><span class="stepnum">3</span><strong>回して確認。</strong>指先で心棒をひねって回し、円盤が水平に、ぶれずに回るか確かめます。ぶれる場合は、中心の位置と心棒の垂直を見直してください。</li>
+    </ol>
+    <h3>CDの回し方</h3>
+    <ul>
+      <li>DVDケースやCDケースの<strong>中央の軸（スピンドル）</strong>に差して、縁を指で弾くように回すのが安定します。</li>
+      <li>平らな机の上で、中心穴に鉛筆や軸を通して回す方法もあります。</li>
+      <li>回転が長く続くほど見やすいので、水平な場所で、静かに回すのがコツです。</li>
+    </ul>
+  </section>
+
+  <section class="card" id="view">
+    <h2>見方のコツ</h2>
+    <ul>
+      <li><strong>明るい白色光の下で。</strong>太陽の光や、白い照明（昼白色のLEDなど）の下がいちばん見やすくなります。暗い場所や色のついた照明では見えにくくなります。</li>
+      <li><strong>速さの目安は、毎秒5〜10回転ほど。</strong>遅すぎても速すぎても色は出にくいので、いろいろな速さを試してみてください。</li>
+      <li><strong>回転方向を変えると、色の出方が入れ替わります。</strong>時計回りと反時計回りで、輪の色がそっくり入れ替わる様子を観察してみましょう。</li>
+      <li><strong>色が見えないときは</strong>：回転の速さを少しずつ変える／もっと明るい光の下へ移る／逆方向に回す／少し離れて眺める、を試してください。</li>
+      <li>見える色や強さには大きな<strong>個人差</strong>があります。見えにくい絵柄があっても、それは目の良し悪しとは関係ありません。</li>
+    </ul>
+  </section>
+
+  <section class="card" id="science">
+    <h2>不思議の解説</h2>
+    <h3>来歴</h3>
+    <p>白黒の模様から色が見える現象は、1838年にドイツの学者<strong>フェヒナー</strong>が「主観色（しゅかんしょく）」として記述したのが始まりとされています。その後1894年、イギリスの玩具職人<strong>ベンハム</strong>がこの現象を使ったコマを売り出し、「ベンハムのコマ」として広く知られるようになりました。</p>
+    <h3>なぜ白黒から色が見えるの？</h3>
+    <p>有力な説はこうです。私たちの目には、色を感じる細胞（錐体：すいたい）が3種類あり、それぞれ赤・緑・青寄りの光を受け持ちます。この3種類は、光の点滅に応答する<strong>速さがわずかに違います</strong>。円盤が回ると、目には白と黒の点滅パターンが届きます。場所（円弧の位置）によって点滅のタイミングがずれるため、3種類の細胞の応答にも時間差が生まれ、脳がその差を「色」として感じ取る、という考え方です。回転方向を変えるとタイミングの順序が逆になるので、見える色が入れ替わります。</p>
+    <p>ただし、これは有力な説明のひとつで、現象のすべてが解明されたわけではありません。今も研究が続いている、現役の不思議です。</p>
+    <p class="note">見える色は人によって違います。同じ絵柄でも「赤っぽい」と言う人と「青っぽい」と言う人がいます。家族や友だちと見比べて話し合うのも、このコマの楽しいところです。</p>
+  </section>
+</main>
+<footer>
+  <p>ベンハムのコマ工作キット ― 絵柄・型紙・説明文はすべてこのキットのための書き下ろしです。見える色の「傾向」は目安であり、個人差があります。</p>
+</footer>
+<script>
+"use strict";
+/* ================= 絵柄データ（オリジナル6種） =================
+   角度は12時方向を0°として時計回り。半径は円盤半径に対する割合（0〜1）。
+   base＝扇形（黒）、arcs＝円弧の帯。INK＝黒、WHT＝白。 */
+var INK = "#17171a", WHT = "#ffffff";
+function A(rIn, rOut, a0, a1, fill){ return { rIn:rIn, rOut:rOut, a0:a0, a1:a1, fill:fill || INK }; }
+var PATTERNS = [
+  { id:"asa", name:"朝焼けアーチ", tendency:"赤〜橙系の輪が出やすい（目安）",
+    base:[{ a0:180, a1:360, fill:INK }],
+    arcs:[ A(0.20,0.30,345,385), A(0.36,0.46,330,390), A(0.52,0.62,315,395), A(0.68,0.78,305,400), A(0.84,0.94,295,415) ] },
+  { id:"aoi", name:"青い二重輪", tendency:"青〜緑系の輪が出やすい（目安）",
+    base:[{ a0:180, a1:360, fill:INK }],
+    arcs:[ A(0.22,0.30,310,348), A(0.22,0.30,8,46), A(0.36,0.44,310,348), A(0.36,0.44,8,46),
+           A(0.50,0.58,310,348), A(0.50,0.58,8,46), A(0.64,0.72,310,348), A(0.64,0.72,8,46),
+           A(0.78,0.86,310,348), A(0.78,0.86,8,46) ] },
+  { id:"uzu", name:"渦巻きの尾", tendency:"紫〜青系の輪が出やすい（目安）",
+    base:[{ a0:180, a1:360, fill:INK }],
+    arcs:[ A(0.20,0.29,350,405), A(0.34,0.43,338,393), A(0.48,0.57,326,381), A(0.62,0.71,314,369), A(0.76,0.85,302,357),
+           A(0.40,0.48,200,245,WHT), A(0.60,0.68,215,260,WHT) ] },
+  { id:"yotsu", name:"四つ葉の交差", tendency:"緑〜黄系の輪が出やすい（目安）",
+    base:[{ a0:0, a1:90, fill:INK }, { a0:180, a1:270, fill:INK }],
+    arcs:[ A(0.26,0.36,102,168), A(0.26,0.36,282,348), A(0.46,0.56,100,170), A(0.46,0.56,280,350),
+           A(0.66,0.76,98,172), A(0.66,0.76,278,352), A(0.84,0.93,96,174), A(0.84,0.93,276,354) ] },
+  { id:"hanten", name:"反転リング", tendency:"赤みと青みが同時に出やすい（目安）",
+    base:[{ a0:180, a1:360, fill:INK }],
+    arcs:[ A(0.24,0.34,320,395), A(0.44,0.54,320,395), A(0.64,0.74,320,395), A(0.82,0.92,320,395),
+           A(0.24,0.34,232,307,WHT), A(0.44,0.54,232,307,WHT), A(0.64,0.74,232,307,WHT), A(0.82,0.92,232,307,WHT) ] },
+  { id:"uroko", name:"うろこ模様", tendency:"淡い色が混ざって見えやすい（目安）",
+    base:[{ a0:180, a1:360, fill:INK }],
+    arcs:[ A(0.170,0.245,325,370), A(0.285,0.360,355,400), A(0.400,0.475,325,370), A(0.515,0.590,355,400),
+           A(0.630,0.705,325,370), A(0.745,0.820,355,400), A(0.860,0.935,325,370) ] }
+];
+/* ================= 寸法（mm） ================= */
+var DIM = { cdR: 60, cdHoleR: 7.5, spinR: 50, cdCx: 100, cdCy: 80, spinCx: 100, spinCy: 208 };
+var PAGES = [
+  { name:"型紙（CD用＋心棒用）", w:210, h:297, tpl:true },
+  { name:"説明書1 作り方", w:210, h:297, tpl:false },
+  { name:"説明書2 見方と解説", w:210, h:297, tpl:false }
+];
+var NET = [];
+function reg(page, id, x, y, w, h, kind){ NET.push({ page:page, id:id, x:x, y:y, w:w, h:h, kind:kind || "part" }); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+function txt(x, y, s, size, fill, anchor, extra){
+  return '<text x="'+x+'" y="'+y+'" font-size="'+size+'" fill="'+fill+'" text-anchor="'+(anchor||"middle")+'" font-family="sans-serif" '+(extra||"")+'>'+esc(s)+'</text>';
+}
+function F(n){ return Math.round(n * 100) / 100; }
+function pt(cx, cy, r, deg){ var rad = deg * Math.PI / 180; return [cx + r * Math.sin(rad), cy - r * Math.cos(rad)]; }
+function piePath(cx, cy, r, a0, a1){
+  var p1 = pt(cx, cy, r, a0), p2 = pt(cx, cy, r, a1), laf = (a1 - a0) > 180 ? 1 : 0;
+  return 'M'+F(cx)+' '+F(cy)+' L'+F(p1[0])+' '+F(p1[1])+' A'+F(r)+' '+F(r)+' 0 '+laf+' 1 '+F(p2[0])+' '+F(p2[1])+' Z';
+}
+function annPath(cx, cy, rIn, rOut, a0, a1){
+  var p1 = pt(cx, cy, rOut, a0), p2 = pt(cx, cy, rOut, a1), p3 = pt(cx, cy, rIn, a1), p4 = pt(cx, cy, rIn, a0), laf = (a1 - a0) > 180 ? 1 : 0;
+  return 'M'+F(p1[0])+' '+F(p1[1])+' A'+F(rOut)+' '+F(rOut)+' 0 '+laf+' 1 '+F(p2[0])+' '+F(p2[1])
+       + ' L'+F(p3[0])+' '+F(p3[1])+' A'+F(rIn)+' '+F(rIn)+' 0 '+laf+' 0 '+F(p4[0])+' '+F(p4[1])+' Z';
+}
+/* 円盤1枚分のSVG（cx,cy,R：mm／holeR>0なら中心穴、markCenter＝中心マーク） */
+function diskSVG(cx, cy, R, holeR, pattern, markCenter){
+  var s = '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="#ffffff"/>';
+  pattern.base.forEach(function(sec){ s += '<path d="'+piePath(cx, cy, R, sec.a0, sec.a1)+'" fill="'+sec.fill+'"/>'; });
+  pattern.arcs.forEach(function(a){ s += '<path d="'+annPath(cx, cy, a.rIn * R, a.rOut * R, a.a0, a.a1)+'" fill="'+a.fill+'"/>'; });
+  if (holeR > 0){
+    s += '<circle cx="'+cx+'" cy="'+cy+'" r="'+holeR+'" fill="#ffffff" stroke="#1a1a1a" stroke-width="0.35"/>';
+    s += '<circle cx="'+cx+'" cy="'+cy+'" r="0.7" fill="#999"/>';
+  }
+  if (markCenter){
+    s += '<line x1="'+(cx - 6)+'" y1="'+cy+'" x2="'+(cx + 6)+'" y2="'+cy+'" stroke="#888" stroke-width="0.3"/>';
+    s += '<line x1="'+cx+'" y1="'+(cy - 6)+'" x2="'+cx+'" y2="'+(cy + 6)+'" stroke="#888" stroke-width="0.3"/>';
+    s += '<circle cx="'+cx+'" cy="'+cy+'" r="1.2" fill="none" stroke="#888" stroke-width="0.3"/>';
+  }
+  s += '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="#1a1a1a" stroke-width="0.35"/>';
+  return s;
+}
+function calLine(page, x, y, vertical){
+  var x2 = vertical ? x : x + 50, y2 = vertical ? y + 50 : y;
+  reg(page, "cal", Math.min(x, x2), Math.min(y, y2), Math.abs(x2 - x) || 0.4, Math.abs(y2 - y) || 0.4, "cal");
+  var s = '<line x1="'+x+'" y1="'+y+'" x2="'+x2+'" y2="'+y2+'" stroke="#d42a1e" stroke-width="0.5"/>';
+  if (vertical){
+    s += '<line x1="'+(x - 2)+'" y1="'+y+'" x2="'+(x + 2)+'" y2="'+y+'" stroke="#d42a1e" stroke-width="0.5"/>';
+    s += '<line x1="'+(x - 2)+'" y1="'+y2+'" x2="'+(x + 2)+'" y2="'+y2+'" stroke="#d42a1e" stroke-width="0.5"/>';
+    s += '<text x="'+(x - 3.4)+'" y="'+(y + 25)+'" font-size="3.2" fill="#d42a1e" text-anchor="middle" font-family="sans-serif" transform="rotate(-90 '+(x - 3.4)+' '+(y + 25)+')">5cm</text>';
+  } else {
+    s += '<line x1="'+x+'" y1="'+(y - 2)+'" x2="'+x+'" y2="'+(y + 2)+'" stroke="#d42a1e" stroke-width="0.5"/>';
+    s += '<line x1="'+x2+'" y1="'+(y - 2)+'" x2="'+x2+'" y2="'+(y + 2)+'" stroke="#d42a1e" stroke-width="0.5"/>';
+    s += txt(x + 25, y - 1.6, "5cm", 3.2, "#d42a1e");
+  }
+  return s;
+}
+function pageHead(page, title){
+  var P = PAGES[page];
+  return txt(P.w / 2, 6.0, title, 4.1, "#333")
+       + (P.tpl ? txt(P.w / 2, 11.2, "100%（実際のサイズ）で印刷し、赤い線が5cmか確かめてください", 2.9, "#777") : "");
+}
+/* ================= 型紙ページ ================= */
+function buildTemplate(pattern){
+  var s = pageHead(0, "型紙 ― ベンハムのコマ「" + pattern.name + "」");
+  s += diskSVG(DIM.cdCx, DIM.cdCy, DIM.cdR, DIM.cdHoleR, pattern, false);
+  reg(0, "cdDisk", DIM.cdCx - DIM.cdR, DIM.cdCy - DIM.cdR, DIM.cdR * 2, DIM.cdR * 2);
+  s += txt(DIM.cdCx, 148, "CD／DVD用 ― 直径120mm・中心穴15mm（切り抜いてレーベル面に貼ります）", 3.4, "#333");
+  s += diskSVG(DIM.spinCx, DIM.spinCy, DIM.spinR, 0, pattern, true);
+  reg(0, "spinDisk", DIM.spinCx - DIM.spinR, DIM.spinCy - DIM.spinR, DIM.spinR * 2, DIM.spinR * 2);
+  s += txt(DIM.spinCx, 266, "心棒用 ― 直径100mm（厚紙に貼って切り抜き、中心マークに竹串を立てます）", 3.4, "#333");
+  s += txt(105, 280, "絵柄：" + pattern.name + " ― 見えやすい色の傾向：" + pattern.tendency + " ※色の見え方には個人差があります", 3.1, "#777");
+  s += calLine(0, 185, 30, true);
+  return s;
+}
+/* ================= 説明書ページ ================= */
+function textPage(title, blocks){
+  var s = txt(105, 14, title, 5.2, "#26262a", "middle", 'font-weight="700"');
+  s += '<line x1="12" y1="18" x2="198" y2="18" stroke="#b3541e" stroke-width="0.6"/>';
+  var y = 27;
+  blocks.forEach(function(b){
+    if (b.t === "h"){ s += txt(12, y, b.s, 4.6, "#2f5da3", "start", 'font-weight="700"'); y += 8.4; }
+    else { b.lines.forEach(function(ln){ s += txt(14, y, ln, 3.9, "#2b2620", "start"); y += 5.9; }); y += 2.6; }
+  });
+  return s;
+}
+function buildManual1(){
+  return textPage("説明書 1／2 ― 作り方", [
+    { t:"h", s:"用意するもの" },
+    { t:"p", lines:[
+      "・印刷した型紙　・使わないCD／DVD（CD用）　・厚紙 0.5〜1mm（心棒用）",
+      "・竹串または割り箸（心棒用）　・スティックのり／両面テープ、接着剤",
+      "・ハサミ、カッター、コンパスカッター（あれば）、定規"] },
+    { t:"h", s:"CD／DVD用（直径120mm）" },
+    { t:"p", lines:[
+      "1. 型紙を100%で印刷し、赤い線が5cmちょうどか定規で確かめる。",
+      "2. 外側の円を切り抜き、中心の穴（直径15mm）も切り抜く。",
+      "　 中心がずれると回転がぶれる。コンパスカッターを使うと正確に切れる。",
+      "3. CDのレーベル面に中心穴を合わせて貼る。中心から外側へ空気を押し出す",
+      "　 ように貼ると、気泡やしわが入りにくい。",
+      "4. のりがよく乾いてから回す。"] },
+    { t:"h", s:"心棒用（直径100mm）" },
+    { t:"p", lines:[
+      "1. 型紙を厚紙に貼り、乾いてから円を切り抜く。",
+      "2. 中心マークに竹串・割り箸をまっすぐ垂直に刺し、裏側を接着剤で固める。",
+      "　 小さな紙片を裏に貼って補強すると、ぐらつきにくい。",
+      "3. 指先で心棒をひねって回し、円盤が水平にぶれず回るか確かめる。"] },
+    { t:"h", s:"CDの回し方" },
+    { t:"p", lines:[
+      "・DVDケース等の中央の軸に差し、縁を指で弾くように回すと安定する。",
+      "・中心穴に鉛筆などを通して、平らな机の上で回す方法もある。",
+      "・水平な場所で静かに回すと、回転が長く続いて見やすい。"] }
+  ]);
+}
+function buildManual2(){
+  return textPage("説明書 2／2 ― 見方と解説", [
+    { t:"h", s:"見方のコツ" },
+    { t:"p", lines:[
+      "・明るい白色光の下で見る（太陽光や昼白色の照明が最適）。",
+      "・速さの目安は毎秒5〜10回転ほど。遅すぎても速すぎても出にくい。",
+      "・回転方向を変えると、見える色が入れ替わる。",
+      "・色が見えないときは：速さを変える／もっと明るくする／逆回転にする／",
+      "　 少し離れて眺める、を試す。見え方には大きな個人差がある。"] },
+    { t:"h", s:"来歴" },
+    { t:"p", lines:[
+      "・1838年、フェヒナーが白黒の模様から色が見える「主観色」を記述。",
+      "・1894年、ベンハムがこの現象を使ったコマを売り出し、広く知られるように",
+      "　 なった。このため「ベンハムのコマ（ベンハムの円盤）」と呼ばれる。"] },
+    { t:"h", s:"なぜ色が見えるのか" },
+    { t:"p", lines:[
+      "・目の奥には色を感じる細胞（錐体）が3種類あり、応答の速さが少しずつ違う。",
+      "・円盤が回ると白黒の点滅が目に届き、場所ごとにタイミングがずれるため、",
+      "　 細胞の応答に時間差が生まれ、脳がそれを色として感じる、という説が有力。",
+      "・ただし完全には解明されておらず、今も研究が続いている現象である。",
+      "・回転方向を変えるとタイミングの順序が逆になり、色が入れ替わる。",
+      "・見える色は人によって違う。それもこの現象のおもしろさのひとつ。"] },
+    { t:"h", s:"注意" },
+    { t:"p", lines:[
+      "・光のちらつきが苦手な人は、長く見続けないこと。",
+      "・気分が悪くなったら、すぐに見るのをやめること。"] }
+  ]);
+}
+/* ================= ページ組み立て ================= */
+function buildPage(pageIdx, pattern){
+  NET = NET.filter(function(e){ return e.page !== pageIdx; });
+  var P = PAGES[pageIdx];
+  var inner = pageIdx === 0 ? buildTemplate(pattern) : (pageIdx === 1 ? buildManual1() : buildManual2());
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+P.w+" "+P.h+'" width="'+P.w+'mm" height="'+P.h+'mm">'
+       + '<rect x="0" y="0" width="'+P.w+'" height="'+P.h+'" fill="#ffffff"/>' + inner + "</svg>";
+}
+/* 検証用：絵柄と寸法のチェック */
+function runChecks(){
+  var res = { ok: true, msgs: [] };
+  function chk(cond, msg){ res.msgs.push((cond ? "OK " : "NG ") + msg); if (!cond) res.ok = false; }
+  chk(DIM.cdR * 2 === 120, "CD円盤の直径 120mm");
+  chk(DIM.cdHoleR * 2 === 15, "中心穴の直径 15mm");
+  chk(DIM.spinR * 2 === 100, "心棒円盤の直径 100mm");
+  chk(PATTERNS.length >= 5 && PATTERNS.length <= 6, "絵柄 " + PATTERNS.length + "種");
+  PATTERNS.forEach(function(pat, pi){
+    var spans = pat.base.map(function(s){ return [s.a0, s.a1]; }).sort(function(a, b){ return a[0] - b[0]; });
+    var cover = 0, overlap = false, prev = null;
+    spans.forEach(function(sp){ cover += sp[1] - sp[0]; if (prev !== null && sp[0] < prev) overlap = true; prev = Math.max(prev === null ? 0 : prev, sp[1]); });
+    chk(cover > 0 && cover <= 360 && !overlap, "p" + (pi + 1) + " 扇形の配置");
+    pat.arcs.forEach(function(a, ai){
+      chk(a.rIn >= 0.14 && a.rOut <= 0.97 && a.rOut - a.rIn >= 0.06, "p" + (pi + 1) + " arc" + ai + " 太さ");
+      chk(a.a1 - a.a0 >= 15 && a.a1 - a.a0 <= 200, "p" + (pi + 1) + " arc" + ai + " 長さ");
+    });
+    chk(!!pat.name && !!pat.tendency, "p" + (pi + 1) + " 名前と傾向");
+  });
+  for (var p = 0; p < PAGES.length; p++){
+    buildPage(p, PATTERNS[0]);
+    var P = PAGES[p], es = NET.filter(function(e){ return e.page === p; });
+    es.forEach(function(e){
+      chk(e.x >= 8 && e.y >= 8 && e.x + e.w <= P.w - 8 && e.y + e.h <= P.h - 8, "page" + (p + 1) + " " + e.id + " ページ内");
+    });
+    for (var i = 0; i < es.length; i++) for (var j = i + 1; j < es.length; j++){
+      var a = es[i], b = es[j];
+      var ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+      var oy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+      if (ox > 0 && oy > 0 && ox * oy > 1) chk(false, "page" + (p + 1) + " 重なり " + a.id + " × " + b.id);
+    }
+    var cal = es.filter(function(e){ return e.kind === "cal"; });
+    if (P.tpl) chk(cal.length === 1 && Math.abs(Math.max(cal[0].w, cal[0].h) - 50) < 0.01, "page" + (p + 1) + " 較正線50mm");
+  }
+  return res;
+}
+/* ================= 印刷用画像（300dpi PNG） ================= */
+function pageToPNG(pageIdx, pattern){
+  return new Promise(function(resolve, reject){
+    var P = PAGES[pageIdx];
+    var svg = buildPage(pageIdx, pattern);
+    var url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
+    var img = new Image();
+    img.onload = function(){
+      try {
+        var scale = 300 / 25.4, cv = document.createElement("canvas");
+        cv.width = Math.round(P.w * scale); cv.height = Math.round(P.h * scale);
+        var cx = cv.getContext("2d");
+        cx.fillStyle = "#ffffff"; cx.fillRect(0, 0, cv.width, cv.height);
+        cx.drawImage(img, 0, 0, cv.width, cv.height);
+        URL.revokeObjectURL(url);
+        resolve(cv.toDataURL("image/png"));
+      } catch (e) { reject(e); }
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error("svg load failed")); };
+    img.src = url;
+  });
+}
+/* ================= 画面の制御 ================= */
+var curPattern = 0, curPage = 0, spinning = false, spinRev = false;
+try { var sv = window.localStorage.getItem("benham_pattern"); if (sv !== null && PATTERNS[+sv]) curPattern = +sv; } catch (e) {}
+function thumbSVG(pat){
+  return '<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">' + diskSVG(28, 28, 26, 3.4, pat, false) + "</svg>";
+}
+function renderPatterns(){
+  var box = document.getElementById("patgrid"); box.innerHTML = "";
+  PATTERNS.forEach(function(pat, i){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "patbtn"; b.setAttribute("aria-pressed", i === curPattern ? "true" : "false");
+    b.innerHTML = thumbSVG(pat) + "<span>" + esc(pat.name) + "</span>";
+    b.addEventListener("click", function(){
+      curPattern = i;
+      try { window.localStorage.setItem("benham_pattern", String(i)); } catch (e) {}
+      renderPatterns(); renderInfo(); renderPreview(); renderSpin(); hidePrintImg();
+    });
+    box.appendChild(b);
+  });
+}
+function renderInfo(){
+  var pat = PATTERNS[curPattern];
+  document.getElementById("patinfo").textContent = "絵柄「" + pat.name + "」― 見えやすい色の傾向：" + pat.tendency + "。見える色には個人差があります。";
+}
+function renderPageTabs(){
+  var box = document.getElementById("pagetabs"); box.innerHTML = "";
+  PAGES.forEach(function(P, i){
+    var b = document.createElement("button");
+    b.type = "button"; b.textContent = P.name; b.setAttribute("aria-pressed", i === curPage ? "true" : "false");
+    b.addEventListener("click", function(){ curPage = i; renderPageTabs(); renderPreview(); hidePrintImg(); });
+    box.appendChild(b);
+  });
+}
+function renderPreview(){
+  document.getElementById("preview").innerHTML = buildPage(curPage, PATTERNS[curPattern]);
+}
+function renderSpin(){
+  document.getElementById("spinwrap").innerHTML =
+    '<svg id="spinSvg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">' + diskSVG(120, 120, 112, 14, PATTERNS[curPattern], false) + "</svg>";
+  applySpin();
+}
+function applySpin(){
+  var svg = document.getElementById("spinSvg");
+  if (!svg) return;
+  var rps = parseFloat(document.getElementById("spinSpeed").value);
+  svg.style.animationDuration = (1 / rps) + "s";
+  svg.style.animationDirection = spinRev ? "reverse" : "normal";
+  svg.style.animationPlayState = spinning ? "running" : "paused";
+  document.getElementById("spinSpeedVal").textContent = "毎秒 約" + rps + "回転";
+  document.getElementById("spinToggle").textContent = spinning ? "止める" : "回す";
+  document.getElementById("spinDir").textContent = "回転方向：" + (spinRev ? "反時計回り" : "時計回り");
+}
+function hidePrintImg(){
+  document.getElementById("printimg").style.display = "none";
+  document.getElementById("lnkDownload").style.display = "none";
+}
+function init(){
+  renderPatterns(); renderInfo(); renderPageTabs(); renderPreview(); renderSpin();
+  document.getElementById("spinToggle").addEventListener("click", function(){ spinning = !spinning; applySpin(); });
+  document.getElementById("spinDir").addEventListener("click", function(){ spinRev = !spinRev; applySpin(); });
+  document.getElementById("spinSpeed").addEventListener("input", applySpin);
+  document.getElementById("btnMakeImg").addEventListener("click", function(){
+    var btn = this; btn.disabled = true; btn.textContent = "画像を作っています…";
+    pageToPNG(curPage, PATTERNS[curPattern]).then(function(dataURL){
+      var box = document.getElementById("printimg");
+      box.innerHTML = "";
+      var img = document.createElement("img");
+      img.src = dataURL; img.alt = PAGES[curPage].name + "の印刷用画像";
+      box.appendChild(img); box.style.display = "block";
+      var lnk = document.getElementById("lnkDownload");
+      lnk.href = dataURL; lnk.download = "benham-" + (curPage + 1) + "-" + PATTERNS[curPattern].id + ".png";
+      lnk.style.display = "block";
+      btn.disabled = false; btn.textContent = "このページの印刷用画像を作る";
+      box.scrollIntoView({ behavior: "smooth", block: "center" });
+    }).catch(function(){
+      btn.disabled = false; btn.textContent = "このページの印刷用画像を作る";
+      document.getElementById("boot-error").style.display = "block";
+    });
+  });
+  window.__kit = { dims: DIM, patterns: PATTERNS, pages: PAGES, buildPage: buildPage, pageToPNG: pageToPNG, runChecks: runChecks, diskSVG: diskSVG, net: function(){ return NET; } };
+}
+try { init(); } catch (e) { document.getElementById("boot-error").style.display = "block"; if (window.console) console.error(e); }
+</script>
+</body>
+</html>
